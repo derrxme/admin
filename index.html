@@ -12,6 +12,47 @@
 </head>
 <body>
 
+<script>
+    // ============= PROTEKSI LOGIN ADMIN =============
+    function checkAdminLogin() {
+        const isLoggedIn = localStorage.getItem('adminLoggedIn');
+        const loginTime = localStorage.getItem('adminLoginTime');
+        
+        // Cek apakah sudah login
+        if (!isLoggedIn || isLoggedIn !== 'true') {
+            window.location.href = 'admin-login.html';
+            return false;
+        }
+        
+        // Cek apakah sudah lebih dari 8 jam (28800000 ms)
+        if (loginTime) {
+            const now = new Date().getTime();
+            const eightHours = 8 * 60 * 60 * 1000;
+            if (now - parseInt(loginTime) > eightHours) {
+                localStorage.removeItem('adminLoggedIn');
+                localStorage.removeItem('adminLoginTime');
+                localStorage.removeItem('adminUsername');
+                window.location.href = 'admin-login.html';
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    // Fungsi logout
+    function adminLogout() {
+        if (confirm('Apakah Anda yakin ingin logout?')) {
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminLoginTime');
+            localStorage.removeItem('adminUsername');
+            window.location.href = 'admin-login.html';
+        }
+    }
+    
+    // Jalankan pengecekan
+    checkAdminLogin();
+</script>
+
 <nav class="navbar">
     <div class="navbar-logo">
         <div class="logo-icon">
@@ -19,12 +60,12 @@
         </div>
         <h1>BPM FPIK UBT</h1>
     </div>
-    <!-- <div class="nav-menu">
-        <a href="./index.html">Beranda</a>
-        <a href="./html/about.html">Tentang</a>
+    <div class="nav-menu">
+        <a href="index.html">Beranda</a>
+        <a href="about.html">Tentang</a>
         <a href="html/dashboard/dashboard.html">Dashboard User</a>
-        <a href="#" class="admin-badge">Admin Panel</a>
-    </div> -->
+        <a href="#" class="admin-badge" onclick="adminLogout()">Logout</a>
+    </div>
 </nav>
 
 <div class="tab-container">
@@ -107,6 +148,6 @@
 
 <div id="toast" class="toast"></div>
 
-<script src="asset/js/admin.js"></script>
+<script src="asset/admin.js"></script>
 </body>
 </html>

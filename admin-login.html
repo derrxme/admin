@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin - BPM FPIK UBT</title>
+    <link rel="stylesheet" href="asset/style.css">
+    <link rel="stylesheet" href="asset/bg-about.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="asset/image-asset/logo-bpm.png">
+    <style>
+        .login-container {
+            max-width: 420px;
+            margin: 80px auto;
+            background: white;
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .login-container h2 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+        }
+        .login-container .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 22px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(244,185,66,0.2);
+        }
+        .btn-login {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn-login:hover {
+            background: #0a3a62;
+            transform: translateY(-2px);
+        }
+        .btn-login:disabled {
+            background: #999;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .alert {
+            padding: 12px 16px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 0.85rem;
+        }
+        .alert.error {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            display: block;
+        }
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 60px;
+        }
+        .logo-icon-login {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 3px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .logo-icon-login img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 40px 20px;
+                padding: 30px 25px;
+            }
+            .login-container h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-logo">
+        <div class="logo-icon">
+            <img src="asset/image-asset/logo-bpm.png" alt="Logo BPM">
+        </div>
+        <h1>BPM FPIK UBT</h1>
+    </div>
+    <div class="nav-menu">
+        <a href="index.html">Beranda</a>
+        <a href="about.html">Tentang</a>
+        <a href="html/dashboard/dashboard.html">Dashboard User</a>
+    </div>
+</nav>
+
+<section style="padding: 40px 8%;">
+    <div class="login-container">
+        <div class="logo-icon-login">
+            <img src="asset/image-asset/logo-bpm.png" alt="Logo BPM">
+        </div>
+        <h2>Admin Panel</h2>
+        <p class="subtitle">Masukkan kredensial untuk mengakses dashboard admin</p>
+        
+        <div id="alertMessage" class="alert"></div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Masukkan username" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Masukkan password" required>
+            </div>
+            <button type="submit" class="btn-login" id="submitBtn">Login</button>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 BPM FPIK UBT</p>
+    <p style="font-size: 0.7rem; margin-top: 5px;">Admin Login Page</p>
+</footer>
+
+<script>
+    // ============= KONFIGURASI HARDCODE =============
+    const VALID_USERNAME = 'bpmadmin';
+    const VALID_PASSWORD = 'bpm2026';
+    
+    const form = document.getElementById('loginForm');
+    const alertBox = document.getElementById('alertMessage');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    function showAlert(message, type) {
+        alertBox.textContent = message;
+        alertBox.className = `alert ${type}`;
+        setTimeout(() => {
+            alertBox.style.display = 'none';
+            alertBox.className = 'alert';
+        }, 3000);
+    }
+    
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        
+        if (!username || !password) {
+            showAlert('Harap isi username dan password!', 'error');
+            return;
+        }
+        
+        // Disable button saat proses
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Memproses...';
+        
+        // Simulasi delay (biar kelihatan prosesnya)
+        setTimeout(() => {
+            if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+                // Simpan session di localStorage
+                localStorage.setItem('adminLoggedIn', 'true');
+                localStorage.setItem('adminLoginTime', new Date().getTime());
+                localStorage.setItem('adminUsername', username);
+                
+                showAlert('Login berhasil! Mengarahkan...', 'success');
+                
+                // Redirect ke admin dashboard
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+            } else {
+                showAlert('Username atau password salah!', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Login';
+            }
+        }, 500);
+    });
+</script>
+</body>
+</html>

@@ -23,6 +23,16 @@ function closeModalForm() {
     if (modal) modal.remove();
 }
 
+// ============= LOGOUT ADMIN =============
+function adminLogout() {
+    if (confirm('Apakah Anda yakin ingin logout?')) {
+        localStorage.removeItem('adminLoggedIn');
+        localStorage.removeItem('adminLoginTime');
+        localStorage.removeItem('adminUsername');
+        window.location.href = 'admin-login.html';
+    }
+}
+
 // ============= TAB NAVIGATION =============
 function switchTab(tab) {
     document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
@@ -129,7 +139,6 @@ function renderAnggota(anggotaList) {
     
     grid.innerHTML = addButton + cardsHtml;
     
-    // Hidden file inputs untuk upload foto
     anggotaList.forEach(m => {
         if (!document.getElementById(`file_member_${m.id}`)) {
             const input = document.createElement('input');
