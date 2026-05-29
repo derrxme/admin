@@ -7,7 +7,7 @@
 }
 
 body {
-    background: linear-gradient(rgba(31, 31, 34, 0.272), rgba(214, 213, 255, 0.272)), url('/asset/image-asset/bg-hero.jpg');
+    background: linear-gradient(rgba(31, 31, 34, 0.272), rgba(214, 213, 255, 0.272)), url('asset/image-asset/bg-hero.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
