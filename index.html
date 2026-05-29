@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - BPM FPIK UBT</title>
+    <title>Admin Panel - BPM FPIK UBT</title>
     <link rel="stylesheet" href="asset/style.css">
     <link rel="stylesheet" href="asset/bg-about.css">
     <link rel="stylesheet" href="asset/admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="asset/image-asset/logo-bpm.png">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -39,14 +41,40 @@
         return true;
     }
     
-    // Fungsi logout
+    // Fungsi logout dengan SweetAlert
     function adminLogout() {
-        if (confirm('Apakah Anda yakin ingin logout?')) {
-            localStorage.removeItem('adminLoggedIn');
-            localStorage.removeItem('adminLoginTime');
-            localStorage.removeItem('adminUsername');
-            window.location.href = 'admin-login.html';
-        }
+        Swal.fire({
+            title: 'Yakin ingin logout?',
+            text: 'Anda akan keluar dari dashboard admin',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#0F4C81',
+            confirmButtonText: 'Ya, Logout',
+            cancelButtonText: 'Batal',
+            background: '#fff',
+            backdrop: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('adminLoggedIn');
+                localStorage.removeItem('adminLoginTime');
+                localStorage.removeItem('adminUsername');
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Logout Berhasil!',
+                    text: 'Anda telah keluar dari dashboard admin',
+                    confirmButtonColor: '#0F4C81',
+                    confirmButtonText: 'OK',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    background: '#fff',
+                    backdrop: true
+                }).then(() => {
+                    window.location.href = 'admin-login.html';
+                });
+            }
+        });
     }
     
     // Jalankan pengecekan
@@ -61,9 +89,9 @@
         <h1>BPM FPIK UBT</h1>
     </div>
     <div class="nav-menu">
-        <a href="index.html">Beranda</a>
-        <a href="about.html">Tentang</a>
-        <a href="html/dashboard/dashboard.html">Dashboard User</a>
+        <a href="https://webhostingmhs-stack.github.io/bpm-22/index.html">Beranda</a>
+        <a href="https://webhostingmhs-stack.github.io/bpm-22/html/about.html">Tentang</a>
+        <a href="https://webhostingmhs-stack.github.io/bpm-22/html/dashboard/dashboard.html">Dashboard</a>
         <a href="#" class="admin-badge" onclick="adminLogout()">Logout</a>
     </div>
 </nav>
@@ -149,5 +177,7 @@
 <div id="toast" class="toast"></div>
 
 <script src="asset/admin.js"></script>
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
